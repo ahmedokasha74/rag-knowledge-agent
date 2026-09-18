@@ -1,2 +1,2 @@
 def main() -> None:
-    print("Hello from mcp-knowledge-agent!")
+    print("Hello from rag-knowledge-agent!")

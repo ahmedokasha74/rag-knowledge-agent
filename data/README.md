@@ -6,7 +6,7 @@ Cloudify is a fictional SaaS company that provides cloud infrastructure services
 
 ## What this documentation represents
 
-This directory contains the internal knowledge base for the fictional Cloudify business. The documents are designed to reflect realistic SaaS governance, billing, support, security, and account policies that a future RAG system can later retrieve and reason over.
+This directory contains the internal knowledge base for the fictional Cloudify business. The documents reflect realistic SaaS governance, billing, support, security, and account policies used by the current Basic RAG pipeline.
 
 The set includes operational knowledge about:
 
@@ -50,9 +50,9 @@ Cloudify offers three subscription plans:
 - data_retention.md: retention windows, deletion, and legal hold rules.
 - api_usage_policy.md: API limits, security rules, and abuse handling.
 
-## Future use in a RAG system
+## RAG use
 
-These documents are intentionally written as a coherent internal knowledge base for a future retrieval-augmented generation system. They are designed to support questions that require combining multiple references, such as:
+These documents are intentionally written as a coherent internal knowledge base for the retrieval-augmented generation system. They support questions that require combining multiple references, such as:
 
 - What is the refund policy for an annual Enterprise plan?
 - What uptime does the Enterprise plan guarantee?
@@ -61,4 +61,4 @@ These documents are intentionally written as a coherent internal knowledge base 
 - What happens during a major platform outage?
 - What API rate limits apply to Professional customers?
 
-The documents are intended to be connected later with structured customer, order, and support data outside this directory. This repository currently focuses only on domain knowledge and business documentation, not on database implementation or integration logic.
+The documents are intentionally interconnected to support future GraphRAG and Hybrid RAG experiments. Structured customer, order, and support data remain outside this directory.

@@ -9,7 +9,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    APP_NAME: str = "mini-RAG"
+    APP_NAME: str = "rag-knowledge-agent"
     APP_VERSION: str = "0.1"
 
     FILE_ALLOWED_TYPES: List[str] = [".txt", ".md", ".pdf"]
