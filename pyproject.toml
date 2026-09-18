@@ -1,0 +1,31 @@
+[project]
+name = "mcp-knowledge-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ahmed Okasha", email = "okashawork515@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-community>=0.4.2",
+    "langchain-text-splitters>=1.1.2",
+    "psycopg[binary]>=3.3.5",
+    "pydantic-settings>=2.15.0",
+    "python-dotenv>=1.2.3",
+    "sqlalchemy>=2.0.52",
+    "tiktoken>=0.14.0",
+    "openai>=1.99.9",
+    "groq>=0.31.0",
+    "cohere>=5.18.0",
+    "langchain-experimental>=0.4.2",
+    "langchain-cohere>=0.6.0",
+    "qdrant-client>=1.19.1",
+]
+
+[project.scripts]
+mcp-knowledge-agent = "mcp_knowledge_agent:main"
+
+[build-system]
+requires = ["uv_build>=0.12.9,<0.13.0"]
+build-backend = "uv_build"
