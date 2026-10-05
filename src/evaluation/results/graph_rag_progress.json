@@ -1,0 +1,42 @@
+{
+  "system": "graph_rag",
+  "sample_keys": [
+    "What plans does Cloudify offer?",
+    "What is Cloudify?",
+    "What is the relationship between Cloudify and Professional?",
+    "What uses of Cloudify are permitted?",
+    "What is the uptime commitment for the Professional plan?",
+    "What uptime does Professional promise, and what service credit applies if monthly uptime falls below 99.9%?",
+    "Can an annual subscription be refunded after 14 days?",
+    "What API request limit applies to the Professional plan?",
+    "How does the Enterprise plan differ from Professional in uptime and support?"
+  ],
+  "scores": [
+    {
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.9726777303395552
+    },
+    {
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.8871169559330868
+    },
+    {
+      "faithfulness": 1.0,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_relevancy": 0.6547686539495629
+    },
+    {
+      "faithfulness": 1.0
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}
