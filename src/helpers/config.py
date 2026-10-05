@@ -58,5 +58,20 @@ class Settings(BaseSettings):
     SCORE_THRESHOLD: float = 0.60
 
 
+    # --- GraphRAG (Neo4j) ---
+    NEO4J_URI: str = "bolt://localhost:7687"
+    NEO4J_USER: str = "neo4j"
+    NEO4J_PASSWORD: Optional[str] = None
+    NEO4J_DATABASE: str = "neo4j"
+
+    GRAPH_EXTRACTION_BACKEND: str = "GROQ"
+    GRAPH_EXTRACTION_MODEL_ID: Optional[str] = None
+    GRAPH_EXTRACTION_MAX_TOKENS: Optional[int] = None
+    GRAPH_EXTRACTION_TEMPERATURE: float = 0.0
+
+    GRAPH_RETRIEVAL_MAX_HOPS: int = 2
+    GRAPH_RETRIEVAL_MAX_RESULTS: int = 20
+
+
 def get_settings():
     return Settings()

@@ -9,9 +9,30 @@ venv/
 env/
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
 
 # Local databases and Qdrant persistence
 data/qdrant_db/
+/qdrant_db/
 *.sqlite
 *.sqlite3
 *.db
+
+# Local Streamlit secrets and runtime output
+.streamlit/secrets.toml
+*.log
+
+# Locally installed agent skill links
+.agents/
+.claude/
+
+# OS/editor files
+.DS_Store
+Thumbs.db

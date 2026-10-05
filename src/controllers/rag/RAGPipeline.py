@@ -39,13 +39,15 @@ class RAGPipeline(BaseController):
         self,
         query: str,
         collection_name: str,
-        limit: int = 5
+        limit: int = 5,
+        score_threshold: float | None = None,
     ):
 
         return await self.retrieval_controller.retrieve(
             query=query,
             collection_name=collection_name,
-            limit=limit
+            limit=limit,
+            score_threshold=score_threshold,
         )
 
     def build_prompt(

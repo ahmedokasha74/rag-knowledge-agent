@@ -1,9 +1,10 @@
 from ..LLMInterface import LLMInterface
 from ..LLMEnums import GroqEnums
-
+from langchain_groq import ChatGroq
 from groq import Groq
 import logging
-
+from langchain_experimental.graph_transformers import LLMGraphTransformer
+from langchain_core.documents import Document
 
 class GroqProvider(LLMInterface):
 
@@ -24,6 +25,7 @@ class GroqProvider(LLMInterface):
         self.generation_model_id = None
         self.embedding_model_id = None
         self.embedding_size = None
+        self.last_generation_error = None
 
         self.enums = GroqEnums
 
@@ -109,6 +111,8 @@ class GroqProvider(LLMInterface):
 
         try:
 
+            self.last_generation_error = None
+
             response = self.client.chat.completions.create(
                 model=self.generation_model_id,
                 messages=chat_history,
@@ -118,17 +122,18 @@ class GroqProvider(LLMInterface):
                 reasoning_effort="low"
             )
 
-            print("\n" + "=" * 60)
-            print("PROMPT SENT TO GROQ")
-            print("=" * 60)
-            print(chat_history[-1]["content"])
-            print("=" * 60)
+            # print("\n" + "=" * 60)
+            # print("PROMPT SENT TO GROQ")
+            # print("=" * 60)
+            # print(chat_history[-1]["content"])
+            # print("=" * 60)
 
             if not response or not response.choices:
 
-                self.logger.error(
-                    "Error while generating text with Groq."
+                self.last_generation_error = (
+                    "Groq returned no completion choices."
                 )
+                self.logger.error(self.last_generation_error)
 
                 return None
 
@@ -138,28 +143,26 @@ class GroqProvider(LLMInterface):
 
             if not content:
 
-                print("finish_reason:", getattr(choice, "finish_reason", None))
-                print("message:", message)
-                print("content:", repr(content))
-                print(
-                    "reasoning:",
-                    repr(getattr(message, "reasoning", None))
+                finish_reason = getattr(choice, "finish_reason", None)
+                self.last_generation_error = (
+                    "Groq returned empty content "
+                    f"(finish_reason={finish_reason!r})."
                 )
-                print("usage:", getattr(response, "usage", None))
-
-                self.logger.error(
-                    "Error while generating text with Groq."
-                )
+                self.logger.error(self.last_generation_error)
 
                 return None
 
-            return content
+            return conten
 
         except Exception as e:
 
-            self.logger.exception(
-                f"Error while generating text with Groq: {e}"
-            )
+            self.last_generation_error = str(e)
+            if getattr(e, "status_code", None) == 429:
+                self.logger.warning("Groq rate limit reached: %s", e)
+            else:
+                self.logger.exception(
+                    f"Error while generating text with Groq: {e}"
+                )
             return None
 
     # --------------------------------------------------
@@ -191,6 +194,45 @@ class GroqProvider(LLMInterface):
             )
             for text in texts
         ]
+
+    def graph_transformer(self, documents: list[Document]):
+        if not self.generation_model_id:
+            raise ValueError(
+                "Set a generation model before creating a graph transformer."
+            )
+
+        llm = ChatGroq(
+            api_key=self.api_key,
+            model=self.generation_model_id,
+            temperature=0,
+            max_tokens=1024,
+            reasoning_format="hidden",
+            reasoning_effort="low",
+        )
+
+        transformer = LLMGraphTransformer(
+            llm=llm,
+            ignore_tool_usage=True,
+        )
+
+        return transformer.convert_to_graph_documents(documents)
+
+
+    def get_chat_model(self):
+        if not self.generation_model_id:
+            raise ValueError(
+                "Set a generation model before creating the chat model."
+            )
+
+        return ChatGroq(
+            api_key=self.api_key,
+            model=self.generation_model_id,
+            temperature=0,
+            reasoning_format="hidden",
+            reasoning_effort="low",
+        )
+
+
 
     # --------------------------------------------------
     # Prompt Construction

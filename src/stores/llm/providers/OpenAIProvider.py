@@ -58,8 +58,16 @@ class OpenAIProvider(LLMInterface):
             self.logger.error("Generation model for OpenAI was not set")
             return None
         
-        max_output_tokens = max_output_tokens if max_output_tokens else self.default_generation_max_output_tokens
-        temperature = temperature if temperature else self.default_generation_temperature
+        max_output_tokens = (
+            max_output_tokens
+            if max_output_tokens is not None
+            else self.default_generation_max_output_tokens
+        )
+        temperature = (
+            temperature
+            if temperature is not None
+            else self.default_generation_temperature
+        )
 
         chat_history.append(self.construct_prompt(prompt =prompt ,role=OpenAIEnums.USER.value))
 
